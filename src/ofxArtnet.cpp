@@ -95,37 +95,47 @@ int ofxArtnet::sendDmx( string targetIp, const unsigned char* data512, int size 
     {
         result = artnet_send_dmx(node, 0, targetIp.c_str(), size , data512);
         if ( result != ARTNET_EOK && verbose) {
-            printf("Failed to Send: %s\n", artnet_strerror() );
+			// printf("Failed to Send: %s\n", artnet_strerror() ); // SJ
         }
     }
     else if ( status != NODES_FINDING && verbose)
     {
-        ofLogError() << "node is not found";
+		// ofLogError() << "node is not found"; // SJ
     }
     return result;
 }
 
 int ofxArtnet::sendDmx( string targetIp, int targetSubnet, int targetUniverse, const unsigned char* data512, int size )
 {
-    int result = ARTNET_EOK;
+	int result = ARTNET_EOK;
     if ( status == NODES_FOUND)
     {
         result = artnet_send_dmx_by_custom_SU(node, 0, targetSubnet, targetUniverse, targetIp.c_str(), size , data512);
         if ( result!= ARTNET_EOK && verbose) {
-            printf("Failed to Send: %s\n", artnet_strerror() );
+			// printf("Failed to Send: %s\n", artnet_strerror() ); // SJ
         }
     }
     else if ( status != NODES_FINDING && verbose)
     {
+		/********************
+		引数でtargetSubnet, targetUniverseを渡しているのに、それを使わずにsend.
+		Error Recoveryのつもりだと思うが、不要.
+		********************/
+		/*
         result = artnet_send_dmx(node, 0, targetIp.c_str(), size , data512);
         if ( result != ARTNET_EOK) {
             if ( verbose ) printf("[ofxArtnet]Failed to Send: %s\n", artnet_strerror() );
         }
+		*/
     }
     else
     {
-        if ( verbose ) printf("NODES_IS_NOT_FOUND\n");
+		/********************
+		ここでprintfすると、表示がずっと続き、(timingの問題なのか)ずっとNODES_FOUNDにならないような動作だった.
+		********************/
+		// if ( verbose ) printf("NODES_IS_NOT_FOUND\n");
         result = ARTNET_EFOUND;
     }
     return result;
 }
+

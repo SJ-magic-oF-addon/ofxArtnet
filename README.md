@@ -1,17 +1,20 @@
-#ofxArtnet
+# ofxArtnet #
 
 ##環境
 *	OS X El Capitan(10.11.6)
 *	Xcode : 7.2
 *	oF : 0.9.0
 
-##add on
+## add on ##
 
-##Contents
+## Contents ##
 https://github.com/hiroyuki/ofxArtnet  
-addon for openframeworks.
+addon for openframeworks.  
+  
+上記をBaseに、一部bug fix.
 
-##note
+
+## note ##
 
 
 
